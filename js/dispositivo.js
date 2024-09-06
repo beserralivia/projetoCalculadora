@@ -19,7 +19,7 @@ function fetchDispositivos() {
         })
         .then(data => {
             const list = document.getElementById('dispositivosList');
-            if (data.dispositivos) {
+            if (data.dispositivos && data.dispositivos.length) {
                 list.innerHTML = '<ul class="list-group border border-danger">';
                 data.dispositivos.forEach(dispositivo => {
                     list.innerHTML += `
@@ -37,7 +37,7 @@ function fetchDispositivos() {
                 });
                 list.innerHTML += '</ul>';
             } else {
-                console.warn('Nenhum dispositivo encontrado.');
+                list.innerHTML = '<p>Nenhum dispositivo encontrado.</p>';
             }
         })
         .catch(error => {
@@ -56,12 +56,12 @@ function fetchUnidadesConsumidoras() {
         })
         .then(data => {
             const select = document.getElementById('unidadeConsumidoraSelect');
-            if (data.unidades_consumidoras) {
+            if (data.unidades_consumidoras && data.unidades_consumidoras.length) {
                 data.unidades_consumidoras.forEach(unidade => {
                     select.innerHTML += `<option value="${unidade.id}">${unidade.nome}</option>`;
                 });
             } else {
-                console.warn('Nenhuma unidade consumidora encontrada.');
+                select.innerHTML = '<option value="">Nenhuma unidade consumidora encontrada.</option>';
             }
         })
         .catch(error => {
@@ -80,12 +80,12 @@ function fetchDependencias() {
         })
         .then(data => {
             const select = document.getElementById('dependenciaSelect');
-            if (data.dependencias) {
+            if (data.dependencias && data.dependencias.length) {
                 data.dependencias.forEach(dependencia => {
                     select.innerHTML += `<option value="${dependencia.id}">${dependencia.nome}</option>`;
                 });
             } else {
-                console.warn('Nenhuma dependência encontrada.');
+                select.innerHTML = '<option value="">Nenhuma dependência encontrada.</option>';
             }
         })
         .catch(error => {

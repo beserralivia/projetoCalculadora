@@ -9,35 +9,55 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchDependencias() {
-    fetch('http://localhost:8000/dependencias/unidade-consumidora/1') // Substitua 1 pelo ID real da unidade consumidora se necessário
-        .then(response => response.json())
+    fetch('http://localhost:8000/dependencias')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log(data); // Verifique a estrutura da resposta
             const list = document.getElementById('dependenciasList');
             list.innerHTML = '<ul class="list-group border border-danger">';
-            data.dependencias.forEach(dependencia => {
-                list.innerHTML += `
-                    <li class="list-group-item m-2 p-2 border-bottom">
-                        <div class="row d-flex justify-content-between">
-                            <div class="col"> <strong>${dependencia.nome}</strong></div>
-                            <div class="col"> <button class="btn btn-info btn-sm float-end ms-2" onclick="showEditForm(${dependencia.id}, '${dependencia.nome}', ${dependencia.unidade_consumidora_id})">Editar</button></div>
-                            <div class="col"> <button class="btn btn-danger btn-sm float-end" onclick="deleteDependencia(${dependencia.id})">Deletar</button></div>
-                        </div>
-                    </li>`;
-            });
+            if (data.dependencias && Array.isArray(data.dependencias)) {
+                data.dependencias.forEach(dependencia => {
+                    list.innerHTML += `
+                        <li class="list-group-item m-2 p-2 border-bottom">
+                            <div class="row d-flex justify-content-between">
+                                <div class="col"> <strong>${dependencia.nome}</strong></div>
+                                <div class="col"> <button class="btn btn-info btn-sm float-end ms-2" onclick="showEditForm(${dependencia.id}, '${dependencia.nome}', ${dependencia.unidade_consumidora_id})">Editar</button></div>
+                                <div class="col"> <button class="btn btn-danger btn-sm float-end" onclick="deleteDependencia(${dependencia.id})">Deletar</button></div>
+                            </div>
+                        </li>`;
+                });
+            } else {
+                list.innerHTML = '<p>Nenhuma dependência encontrada.</p>';
+            }
             list.innerHTML += '</ul>';
         })
         .catch(error => console.error('Erro ao buscar dependências:', error));
 }
 
 function fetchUnidadesConsumidoras() {
-    fetch('http://localhost:8000/unidades-consumidoras') // Ajuste a URL conforme necessário
-        .then(response => response.json())
+    fetch('http://localhost:8000/unidades-consumidoras')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log(data); // Verifique a estrutura da resposta
             const select = document.getElementById('unidadeConsumidoraSelect');
             select.innerHTML = '<option value="" disabled selected>Selecione uma Unidade Consumidora</option>';
-            data.unidades_consumidoras.forEach(unidade => {
-                select.innerHTML += `<option value="${unidade.id}">${unidade.nome}</option>`;
-            });
+            if (data.unidades_consumidoras && Array.isArray(data.unidades_consumidoras)) {
+                data.unidades_consumidoras.forEach(unidade => {
+                    select.innerHTML += `<option value="${unidade.id}">${unidade.nome}</option>`;
+                });
+            } else {
+                select.innerHTML += '<option value="" disabled>Não há unidades consumidoras disponíveis.</option>';
+            }
         })
         .catch(error => console.error('Erro ao buscar unidades consumidoras:', error));
 }
