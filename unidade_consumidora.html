@@ -24,18 +24,26 @@
             <div id="residenciasList" class="mb-4"></div>
         </section>
 
-        <!-- Formulário de Adicionar/Atualizar Unidade Consumidora -->
-        <section id="residenciaForm" class="d-none">
-            <h2 id="formTitle">Cadastrar nova Unidade</h2>
-            <form id="residenciaFormElement">
-                <input type="hidden" id="residenciaId">
-                <div class="mb-3">
-                    <label for="proprietario" class="form-label">Proprietário</label>
-                    <input type="text" class="form-control" id="proprietario" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Salvar</button>
-            </form>
-        </section>
+       <!-- Formulário de Adicionar/Atualizar Unidade Consumidora -->
+<section id="residenciaForm" class="d-none">
+    <h2 id="formTitle">Cadastrar nova Unidade</h2>
+    <form id="residenciaFormElement">
+        <input type="hidden" id="residenciaId">
+        <div class="mb-3">
+            <label for="proprietario" class="form-label">Proprietário</label>
+            <input type="text" class="form-control" id="proprietario" required>
+        </div>
+        <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo de Consumidor</label>
+            <select id="tipo" class="form-select" required>
+                <option value="">Selecione o tipo</option>
+                <!-- Adicione opções aqui dinamicamente ou manualmente -->
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</section>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
