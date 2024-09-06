@@ -1,0 +1,55 @@
+/*index*/
+#indexbody {
+    background-color: #f8f9fa;
+}
+
+.card-custom {
+    background: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.card-custom:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-custom i {
+    font-size: 3rem;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.card-custom h5 {
+    font-size: 1.25rem;
+    margin-top: 10px;
+    color: #495057;
+}
+
+.container-custom {
+    margin-top: 50px;
+}
+
+.row-custom {
+    margin-bottom: 20px;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+    color: #343a40;
+}
+
+/* Barra de navegação */
+.navbar-custom {
+    background-color: #007bff;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: #ffffff;
+}
