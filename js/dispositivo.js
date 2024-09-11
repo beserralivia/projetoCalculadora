@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchDispositivos();
     fetchUnidadesConsumidoras();
     fetchDependencias();
-
+    fetchTiposDispositivos();
     document.getElementById('dispositivoFormElement').addEventListener('submit', function (event) {
         event.preventDefault();
         saveDispositivo();
@@ -93,9 +93,34 @@ function fetchDependencias() {
             alert(`Erro ao buscar dependências: ${error.message}`);
         });
 }
+function fetchTiposDispositivos() {
+    fetch('http://localhost:8000/tipos-dispositivos')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const select = document.getElementById('tipoDispositivoSelect');
+            if (data.tipos_dispositivos && data.tipos_dispositivos.length) {
+                data.tipos_dispositivos.forEach(tipo => {
+                    select.innerHTML += `<option value="${tipo.id}">${tipo.nome}</option>`;
+                });
+            } else {
+                select.innerHTML = '<option value="">Nenhum tipo de dispositivo encontrado.</option>';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar tipos de dispositivos:', error);
+            alert(`Erro ao buscar tipos de dispositivos: ${error.message}`);
+        });
+}
 
 function showAddForm() {
+    console.log('Exibindo formulário de adicionar dispositivo');
     document.getElementById('dispositivoForm').classList.remove('d-none');
+    document.getElementById('dispositivoFormElement').classList.remove('d-none'); // Remover a classe d-none do formulário
     document.getElementById('dispositivoId').value = '';
     document.getElementById('nome').value = '';
     document.getElementById('consumo').value = '';
@@ -105,16 +130,20 @@ function showAddForm() {
     document.getElementById('formTitle').innerText = 'Adicionar Dispositivo';
 }
 
-function showEditForm(id, nome, consumo, uso_diario, unidadeConsumidoraId, dependenciaId) {
+
+
+function showEditForm(id, nome, consumo, uso_diario, unidadeConsumidoraId, dependenciaId, tipoId) {
     document.getElementById('dispositivoForm').classList.remove('d-none');
-    document.getElementById('dispositivoId').value = id;
-    document.getElementById('nome').value = nome;
-    document.getElementById('consumo').value = consumo;
-    document.getElementById('uso_diario').value = uso_diario;
-    document.getElementById('unidadeConsumidoraSelect').value = unidadeConsumidoraId;
-    document.getElementById('dependenciaSelect').value = dependenciaId;
+    document.getElementById('dispositivoId').value = id || '';
+    document.getElementById('nome').value = nome || '';
+    document.getElementById('consumo').value = consumo || '';
+    document.getElementById('uso_diario').value = uso_diario || '';
+    document.getElementById('unidadeConsumidoraSelect').value = unidadeConsumidoraId || '';
+    document.getElementById('dependenciaSelect').value = dependenciaId || '';
+    document.getElementById('tipoDispositivoSelect').value = tipoId || ''; // Adicione este campo
     document.getElementById('formTitle').innerText = 'Editar Dispositivo';
 }
+
 
 function saveDispositivo() {
     const id = document.getElementById('dispositivoId').value;
@@ -123,6 +152,7 @@ function saveDispositivo() {
     const uso_diario = document.getElementById('uso_diario').value;
     const unidadeConsumidoraId = document.getElementById('unidadeConsumidoraSelect').value;
     const dependenciaId = document.getElementById('dependenciaSelect').value;
+    const tipoId = document.getElementById('tipoDispositivoSelect').value; // Adicione este campo
     const method = id ? 'PATCH' : 'POST';
     const url = id ? `http://localhost:8000/dispositivos/${id}` : 'http://localhost:8000/dispositivos';
 
@@ -131,7 +161,14 @@ function saveDispositivo() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nome: nome, consumo: consumo, uso_diario: uso_diario, unidade_consumidora_id: unidadeConsumidoraId, dependencia_id: dependenciaId })
+        body: JSON.stringify({
+            nome: nome,
+            consumo: consumo,
+            uso_diario: uso_diario,
+            unidade_consumidora_id: unidadeConsumidoraId,
+            dependencia_id: dependenciaId,
+            tipo_id: tipoId // Adicione este campo
+        })
     })
     .then(response => {
         if (!response.ok) {
@@ -150,6 +187,7 @@ function saveDispositivo() {
         alert(`Erro ao salvar dispositivo: ${error.message}`);
     });
 }
+
 
 function deleteDispositivo(id) {
     if (!confirm('Você tem certeza que deseja excluir este dispositivo?')) return;

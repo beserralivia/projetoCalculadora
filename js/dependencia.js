@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchDependencias() {
-    fetch('http://localhost:8000/dependencias')
+    fetch('http://localhost:8000/dependencias')  // Essa rota agora existe
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok: ' + response.statusText);
@@ -38,6 +38,7 @@ function fetchDependencias() {
         })
         .catch(error => console.error('Erro ao buscar dependências:', error));
 }
+
 
 function fetchUnidadesConsumidoras() {
     fetch('http://localhost:8000/unidades-consumidoras')
