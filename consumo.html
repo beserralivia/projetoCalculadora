@@ -14,7 +14,6 @@
                 <label for="unidadeConsumidoraSelect">Unidade Consumidora</label>
                 <select id="unidadeConsumidoraSelect" class="form-control">
                     <option value="">Selecione</option>
-                    <!-- As opções serão preenchidas pelo JavaScript -->
                 </select>
             </div>
 
@@ -22,21 +21,22 @@
                 <label for="dependenciaSelect">Dependências (Opcional)</label>
                 <select id="dependenciaSelect" class="form-control">
                     <option value="">Selecionar Dependência</option>
-                    <!-- As opções serão preenchidas pelo JavaScript -->
+                    <option value="todos">Todos os Cômodos</option> <!-- Adicionando a opção "Todos os Cômodos" -->
                 </select>
             </div>
+            
 
             <div class="form-group">
                 <label for="bandeiraSelect">Bandeiras</label>
                 <select id="bandeiraSelect" class="form-control">
-                    <!-- As opções serão preenchidas pelo JavaScript -->
+                    <option value="">Selecione Bandeira</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="tipoConsumidorSelect">Tipos de Consumidores</label>
                 <select id="tipoConsumidorSelect" class="form-control">
-                    <!-- As opções serão preenchidas pelo JavaScript -->
+                    <option value="">Selecione Tipo Consumidor</option>
                 </select>
             </div>
 
@@ -44,78 +44,108 @@
         </form>
 
         <div id="resultado" class="mt-4">
-            <!-- O resultado será exibido aqui -->
         </div>
     </div>
-
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Funções para preencher selects com dados do backend
-            fetchOptions('unidades-consumidoras', 'unidadeConsumidoraSelect');
-            fetchOptions('dependencias', 'dependenciaSelect');
-            fetchOptions('bandeiras', 'bandeiraSelect');
-            fetchOptions('tipos-consumidores', 'tipoConsumidorSelect');
+      document.addEventListener("DOMContentLoaded", function () {
+    fetchOptions('unidades-consumidoras', 'unidadeConsumidoraSelect');
+    fetchOptions('bandeiras', 'bandeiraSelect');
+    fetchOptions('tipos-consumidores', 'tipoConsumidorSelect');
+});
 
-            // Evento para calcular o consumo
-            document.getElementById('calculoForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-                calcularConsumo();
-            });
+function fetchOptions(endpoint, selectId) {
+    fetch(`http://localhost:8000/consumos/${endpoint}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(`${endpoint} data:`, data);
+            const select = document.getElementById(selectId);
+            if (select) {
+                select.innerHTML = '<option value="">Selecione</option>';
+                data.forEach(item => {
+                    select.innerHTML += `<option value="${item.id}">${item.nome}</option>`;
+                });
+            }
+        })
+        .catch(error => {
+            console.error(`Erro ao buscar ${endpoint}:`, error);
         });
+}
 
-        function fetchOptions(endpoint, selectId) {
-            fetch(`http://localhost:8000/${endpoint}`)
-                .then(response => response.json())
-                .then(data => {
-                    const select = document.getElementById(selectId);
-                    if (data && data.length) {
-                        select.innerHTML = '<option value="">Selecione</option>';
-                        data.forEach(item => {
-                            select.innerHTML += `<option value="${item.id}">${item.nome}</option>`;
-                        });
-                    } else {
-                        select.innerHTML = '<option value="">Nenhum item encontrado.</option>';
-                    }
-                })
-                .catch(error => {
-                    console.error(`Erro ao buscar ${endpoint}:`, error);
+function fetchDependencias(unidadeId) {
+    fetch(`http://localhost:8000/consumos/dependencias?unidade_id=${unidadeId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Dependências data:', data);
+            const select = document.getElementById('dependenciaSelect');
+            select.innerHTML = '<option value="">Selecionar Dependência</option>';
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(item => {
+                    select.innerHTML += `<option value="${item.id}">${item.nome}</option>`;
                 });
-        }
-
-        function calcularConsumo() {
-            const unidadeConsumidoraId = document.getElementById('unidadeConsumidoraSelect').value;
-            const dependenciaId = document.getElementById('dependenciaSelect').value;
-            const bandeiraId = document.getElementById('bandeiraSelect').value;
-            const tipoConsumidorId = document.getElementById('tipoConsumidorSelect').value;
-
-            if (!unidadeConsumidoraId) {
-                alert('Por favor, selecione uma unidade consumidora.');
-                return;
+            } else {
+                select.innerHTML += '<option value="">Nenhuma Dependência Disponível</option>';
             }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dependências:', error);
+        });
+}
 
-            const url = `http://localhost:8000/consumos?origem_do_consumo=residencia&item_id=${unidadeConsumidoraId}`;
-            if (dependenciaId) {
-                url += `&dependencia=${dependenciaId}`;
-            }
+document.getElementById('unidadeConsumidoraSelect').addEventListener('change', function() {
+    const unidadeId = this.value;
+    if (unidadeId) {
+        fetchDependencias(unidadeId);
+    } else {
+        document.getElementById('dependenciaSelect').innerHTML = '<option value="">Selecionar Dependência</option>';
+    }
+});
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    const consumoDiario = data.consumo_diario || 0;
-                    const consumoMensal = data.consumo_mensal || 0;
-                    const consumoAnual = data.consumo_anual || 0;
+document.getElementById('calculoForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    calcularConsumo();
+});
+function calcularConsumo() {
+    const unidadeConsumidoraId = document.getElementById('unidadeConsumidoraSelect').value;
+    const dependenciaId = document.getElementById('dependenciaSelect').value;
+    const bandeiraId = document.getElementById('bandeiraSelect').value;
 
-                    document.getElementById('resultado').innerHTML = `
-                        <h3>Resultado</h3>
-                        <p>Consumo Diário: ${consumoDiario} kWh</p>
-                        <p>Consumo Mensal: ${consumoMensal} kWh</p>
-                        <p>Consumo Anual: ${consumoAnual} kWh</p>
-                    `;
-                })
-                .catch(error => {
-                    console.error('Erro ao calcular consumo:', error);
-                });
-        }
+    if (!unidadeConsumidoraId) {
+        alert('Por favor, selecione uma unidade consumidora.');
+        return;
+    }
+
+    let url = `http://localhost:8000/consumos/calcular?unidade_consumidora_id=${unidadeConsumidoraId}&bandeira_id=${bandeiraId}`;
+    if (dependenciaId && dependenciaId !== 'todos') {
+        url += `&dependencia_id=${dependenciaId}`;
+    }
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Dados do cálculo:', data);
+            const tarifa = data.tarifa || 0;
+            const valor_kwh = data.valor_do_kwh || 0;
+            const consumoTotal = data.consumo_total || 0;
+            const listaDispositivos = data.lista_dispositivos || [];
+
+            document.getElementById('resultado').innerHTML = ` 
+                <h3>Resultado</h3> 
+                <p>Tarifa: R$ ${tarifa}</p> 
+                <p>Valor do kWh: R$ ${valor_kwh}</p> 
+                <p>Consumo Total: ${consumoTotal} kWh</p> 
+                <p>Custo Total: R$ ${(consumoTotal * valor_kwh * tarifa).toFixed(2)}</p> 
+                <p>Dispositivos:</p> 
+                <ul> 
+                    ${listaDispositivos.map(d => `<li>${d.nome}: ${d.consumo} kWh/dia</li>`).join('')} 
+                </ul> 
+            `;
+        })
+        .catch(error => {
+            console.error('Erro ao calcular consumo:', error);
+        });
+}
+
+
     </script>
 </body>
 </html>

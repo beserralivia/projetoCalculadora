@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como Funciona o Cálculo de Energia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Fontes e estilo geral */
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(to right, #243B55, #141E30);
+            color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-top: 50px;
+            color: #f9f871;
+        }
+        p {
+            color: #ccc;
+        }
+
+        /* Estilos dos cards */
+        .cards-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        .card-uiverse {
+            background: linear-gradient(145deg, #1e3a5c, #112233);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            margin: 20px;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 30px rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease-in-out;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-uiverse:hover {
+            transform: scale(1.05) rotate(-1deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+        .card-uiverse::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            z-index: 0;
+            transition: opacity 0.3s;
+        }
+        .card-uiverse:hover::before {
+            opacity: 0.3;
+        }
+        .card-uiverse h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            z-index: 1;
+            position: relative;
+        }
+        .card-uiverse p {
+            font-size: 16px;
+            line-height: 1.6;
+            z-index: 1;
+            position: relative;
+        }
+        .card-uiverse strong {
+            color: #f9f871;
+            font-weight: 600;
+        }
+
+        /* Botão voltar */
+        .btn-back {
+            display: block;
+            width: 180px;
+            margin: 50px auto 0 auto;
+            padding: 10px;
+            background-color: #f9f871;
+            border-radius: 30px;
+            color: #243B55;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-back:hover {
+            background-color: #f0d81f;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .card-uiverse {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Entenda o Cálculo de Energia Elétrica</h1>
+
+        <div class="cards-container">
+            <!-- Card 1: Fórmula Básica -->
+            <div class="card-uiverse">
+                <h2>Fórmula Básica</h2>
+                <p>A fórmula básica para calcular o consumo de energia elétrica é:</p>
+                <p><strong>Consumo (kWh) = Potência (W) × Tempo (horas) / 1000</strong></p>
+                <p>Essa fórmula transforma o uso de aparelhos em quilowatt-hora, a unidade de medida utilizada na conta de luz.</p>
+            </div>
+
+            <!-- Card 2: Exemplo Prático -->
+            <!-- <div class="card-uiverse">
+                <h2>Exemplo Prático</h2>
+                <p>Se uma lâmpada de 100W fica ligada por 6 horas por dia, o consumo será:</p>
+                <p><strong>100W × 6h ÷ 1000 = 0,6 kWh/dia</strong></p>
+                <p>Multiplicando por 30 dias, temos 18 kWh por mês.</p>
+            </div> -->
+
+            <!-- Card 3: Custo do Consumo -->
+            <!-- <div class="card-uiverse">
+                <h2>Custo do Consumo</h2>
+                <p>Se o valor do kWh é R$ 0,50, o custo mensal para a lâmpada será:</p>
+                <p><strong>18 kWh × R$ 0,50 = R$ 9,00</strong></p>
+                <p>Isso representa o quanto você pagará para manter a lâmpada ligada.</p>
+            </div> -->
+
+            <!-- Card 4: Fatores Adicionais -->
+            <div class="card-uiverse">
+                <h2>Fatores Adicionais</h2>
+                <p>O cálculo pode ser impactado por fatores como:</p>
+                <p><strong>Bandeiras tarifárias</strong>, que variam de acordo com a época do ano e uso de energia, e a <strong>eficiência dos aparelhos</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Botão voltar -->
+        <a href="consumo_home.html" class="btn-back">Calcular</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

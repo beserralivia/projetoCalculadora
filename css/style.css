@@ -1,55 +1,253 @@
-/*index*/
-#indexbody {
-    background-color: #f8f9fa;
+/* styles.css */
+
+/* Estilos gerais para todas as páginas */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5; /* Cor de fundo geral */
+    color: #333; /* Cor do texto */
 }
 
-.card-custom {
-    background: #ffffff;
-    border: none;
-    border-radius: 20px;
-    padding: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
+.container {
+    max-width: 1200px;
 }
 
-.card-custom:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card-custom i {
-    font-size: 3rem;
-    color: #007bff;
-    margin-bottom: 15px;
+.card-header {
+    background-color: #0056b3; /* Azul escuro */
+    color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-.card-custom h5 {
-    font-size: 1.25rem;
-    margin-top: 10px;
+.form-label {
+    font-weight: 600;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #0056b3; /* Azul escuro */
+    border-color: #0056b3;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #003d7a; /* Azul escuro mais intenso */
+    border-color: #003d7a;
+    transform: translateY(-2px);
+}
+
+.btn-outline-success {
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 2px solid #ffc107; /* Amarelo */
+    color: #ffc107; /* Amarelo */
+    transition: all 0.3s ease;
+}
+
+.btn-outline-success:hover {
+    background-color: #ffc107; /* Amarelo */
+    color: #ffffff;
+}
+
+/* Estilos específicos para as páginas */
+
+/* Home Page */
+/* Estilos gerais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
     color: #495057;
 }
 
-.container-custom {
-    margin-top: 50px;
+.container {
+    max-width: 1200px;
 }
 
-.row-custom {
+.navbar {
     margin-bottom: 20px;
 }
 
-.title {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 2rem;
-    color: #343a40;
-}
-
-/* Barra de navegação */
-.navbar-custom {
-    background-color: #007bff;
-}
-
-.navbar-custom .navbar-brand,
-.navbar-custom .nav-link {
+.navbar-dark .navbar-nav .nav-link {
     color: #ffffff;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffd700; /* Amarelo */
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Botões */
+.btn-custom-primary {
+    background-color: #003366; /* Azul escuro */
+    color: #ffffff;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none;
+}
+
+.btn-custom-primary:hover {
+    background-color: #001a33; /* Azul mais escuro */
+    transform: translateY(-2px);
+}
+
+/* Seção de boas-vindas */
+#bemvindo {
+    width: 100%;
+    height: 600px;
+    background-color: #003366; /* Azul escuro */
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+/* Dispositivos Page */
+.header {
+    background-color: #ffffff;
+    border-bottom: 2px solid #e9ecef;
+    padding: 20px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #0056b3; /* Azul escuro */
+}
+
+.header button {
+    border-radius: 25px;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Dependências Page */
+.header {
+    background-color: #ffffff;
+    border-bottom: 2px solid #e9ecef;
+    padding: 20px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #0056b3; /* Azul escuro */
+}
+
+.header button {
+    border-radius: 25px;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Consumos Page */
+.btn-outline-success {
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 2px solid #ffc107; /* Amarelo */
+    color: #ffc107; /* Amarelo */
+    transition: all 0.3s ease;
+}
+
+.btn-outline-success:hover {
+    background-color: #ffc107; /* Amarelo */
+    color: #ffffff;
+}
+
+/* Bandeiras Page */
+#bemvindo {
+    width: 100%;
+    height: 600px;
+    background-color: #0056b3; /* Azul escuro */
+}
+
+/* CSS para botões de ação */
+.btn-custom {
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-left: 0.5rem; /* Espaçamento entre botões */
+}
+
+.btn-custom-info {
+    background-color: #17a2b8;
+    color: #ffffff;
+}
+
+.btn-custom-info:hover {
+    background-color: #138496;
+}
+
+.btn-custom-danger {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.btn-custom-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-custom-primary {
+    background-color: #0056b3; /* Azul escuro */
+    color: #ffffff;
+}
+
+.btn-custom-primary:hover {
+    background-color: #003d7a; /* Azul escuro mais intenso */
 }
